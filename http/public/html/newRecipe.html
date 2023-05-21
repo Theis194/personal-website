@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Kogebog</title>
+    <link rel="stylesheet" href="../css/styling.css">
+    <link rel="stylesheet" href="../css/formStyle.css">
+  </head>
+  <body>
+    <div class="topnav">
+        <a href="../html/index.html">Home</a>
+        <a href="#test" class="active">Ny Opskrift</a>
+        <a href="#boller">Boller</a>
+    </div>
+
+    <div class="box center" style="margin-bottom: 20px;">
+        <div id="container" style="padding-bottom: 20px;">
+            <hr id="left" class="sideline">
+            <p id="middle">Ny Opskrift</p>
+            <hr id="right" class="sideline">
+        </div>
+
+        <form class="insidebox">
+            <div class="row">
+                <div class="col-25">
+                    <label for="title">Titel</label><br>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="title" name="title" placeholder="Titel">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="image">Billed:</label><br>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="image" name="image" placeholder="Billede">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="description">Beskrivelse</label><br>
+                </div>
+                <div class="col-75">
+                    <textarea id="description" name="description" placeholder="Skriv noget.." style="height:75px; overflow: hidden;"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="ingredients">Ingredienser</label><br>
+                </div>
+                <div class="col-75">
+                    <textarea id="ingredients" name="ingredients" placeholder="Vand 2 Liter &#10Separere ingredienser med linjeskift &#10For to lister af ingredienser separer med (--- navn)" style="height:75px; overflow: hidden;"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="procedure">Fremgangsmåde</label><br>
+                </div>
+                <div class="col-75">
+                    <textarea id="procedure" name="procedure" placeholder="Fremgangsmåden.." style="height:75px; overflow: hidden;"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="duration">Tid i alt</label><br>
+                </div>
+                <div class="col-37 left">
+                    <input type="text" id="durationh" name="duration" placeholder="Timer">
+                </div>
+                <div class="col-37 right">
+                    <input type="text" id="durationm" name="duration" placeholder="minutter">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="workduration">Arbejdstid</label><br>
+                </div>
+                <div class="col-37 left">
+                    <input type="text" id="workdurationh" name="workduration" placeholder="Timer">
+                </div>
+                <div class="col-37 right">
+                    <input type="text" id="workdurationm" name="workduration" placeholder="Minutter">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="shelfLife">Holdbarhed</label><br>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="shelfLife" name="shelfLife" placeholder="Dage">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="servings">Antal</label><br>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="servings" name="servings" placeholder="Antal stk./Antal pers.">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                  <label for="freezable">Kan Fryses?</label>
+                </div>
+                <div class="col-75">
+                  <select id="freezable" name="freezable">
+                    <option value="ja">Ja</option>
+                    <option value="Nej">Nej</option>
+                    <option value="na">N/A</option>
+                  </select>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <input type="submit" value="Submit">
+            </div>
+
+        </form>
+    </div>
+
+	<script src="../js/newRecipe.js"></script>
+  </body>
+</html>
