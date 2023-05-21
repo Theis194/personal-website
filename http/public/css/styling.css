@@ -1,0 +1,199 @@
+:root {
+    --darkblue: #388087;
+    --turquise: #6fb3b8;
+    --pastelblue: #badfe7;
+    --pastelgreen: #c2edce;
+    --white: #f6f6f2;
+}
+
+body {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    background-color: var(--white);
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+h1 {
+    text-align: center;
+    text-decoration: underline;
+    color: var(--darkblue);
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+li {
+    float: left;
+    margin-right: 3px;
+}
+
+.horizontallist {
+    list-style-type: none;
+    justify-content: space-evenly;
+    margin: 0;
+    padding-left: 100px;
+    padding-right: 100px;
+    overflow: hidden;
+    display: flex;
+}
+
+.verticallist {
+    list-style-type: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: block;
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: var(--turquise);
+}
+
+.topnav a {
+    float: left;
+    color: var(--white);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.topnav a:hover {
+    background-color: var(--white);
+    color: black;
+}
+  
+.topnav a.active {
+    background-color: var(--darkblue);
+    color: var(--white);
+}
+
+.center {
+    margin: auto;
+}
+
+.container {
+    display: flex;
+}
+  
+.container img {
+    width: 50%; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.container p {
+    margin-left: 20px; /* Adjust the spacing between elements */
+    padding-top: 20px;
+}
+
+.line {
+    background-color: var(--darkblue);
+    border: var(--darkblue);
+    width: 30px;
+    height: 3px;
+}
+
+.underline {
+    background-color: var(--darkblue);
+    border: var(--darkblue);
+    height: 3px;
+    width: auto;
+}
+
+.sideline {
+    background-color: var(--darkblue);
+    border: var(--darkblue);
+    height: 3px;
+    width: auto;
+}
+
+.box {
+    max-width: 1000px;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    word-wrap: break-word;
+    background-color: var(--white);
+    box-shadow: 4px 10px 18px rgb(181, 181, 181);
+    overflow: auto;
+  }
+
+.insidebox {
+    width: auto;
+    padding: 20px 20px;
+    word-wrap: break-word;
+    background-color: var(--pastelblue);
+}
+
+.ingredienslist {
+    margin: 0;
+    padding: 0;
+    float: left;
+    display: block;
+    list-style-type: none;
+}
+
+.listitem {
+    margin: 0;
+    padding: 0;
+    float: left;
+    display: block;
+    list-style-type: none;
+    clear: left;
+}
+
+.recipelistitem {
+    padding-left: 0;
+    width: 100%;
+}
+
+#checkboxes label {
+    float: left;
+}
+
+#checkboxes ul {
+    margin: 0;
+    list-style: none;
+    float: left;
+}
+
+#container {
+    height:100%;
+    width:100%;
+    font-size:0;
+    display: flex;
+ }
+
+#left, #middle, #right {
+    display:inline-block;
+    *display:inline;
+    zoom:2;
+    vertical-align:top;
+    font-size:13px;
+ }
+ 
+ #left {
+    width:40%;
+    float: left;
+ }
+ 
+ #middle {
+    width:20%;
+    margin: auto;
+    text-align: center;
+ }
+ 
+ #right {
+    width:40%;
+    float: right;
+ }

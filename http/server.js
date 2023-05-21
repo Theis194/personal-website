@@ -19,7 +19,7 @@ const server = http.createServer(async (req, res) =>{
                 case "/getThing": // Standard response
                     
                     break;
-                default: // File not found
+                default: // On first entry gives the landing page, else it gives the requested page
                     const filePath = path.join(publicDirectoryPath, path.normalize(req.url === "/" ? "/html/index.html" : req.url));
                     const extname = path.extname(filePath);
                     let contentType = "text/html";
@@ -29,7 +29,7 @@ const server = http.createServer(async (req, res) =>{
                         if (err) {
                             // Responds with error if there is any
                             if (err.code === "ENOENT") {
-                                res.writeHead(404);
+                                res.writeHead(404); // This can be changed to go to the landing page
                                 res.end(`File not found: ${req.url}`);
                             } else {
                                 res.writeHead(500);
