@@ -1,4 +1,4 @@
-export { Recipe, Ingredient, createRecipe }
+export { createNewRecipe }
 
 class Recipe {
     constructor(title, description, imgPath, time, workTime, shelfLife, servings, freezable, ingredients, procedure) {
@@ -27,6 +27,10 @@ class Ingredient{
     }
 }
 
-function createRecipe(recipe) {
-    
+function createNewRecipe(recipe) {
+    console.log(recipe);
+
+    //return {test: "test", test2: "test2"};  // this returns the object to the website
+    // This needs to return true if input is valid
+    // and return an object stating what is wrong
 }

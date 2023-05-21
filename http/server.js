@@ -5,6 +5,9 @@ import path from "path";
 import dotenv from "dotenv";
 dotenv.config();
 
+import { createNewRecipe } from "../Recipe/recipe.js"
+import { type } from "os";
+
 const hostname = process.env.HOSTNAME;
 const port = process.env.PORT;
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
@@ -62,7 +65,21 @@ const server = http.createServer(async (req, res) =>{
             });
 
             req.on("end", async () => {
+                switch (body.type) { // Finds type of PUT request
+                    case "newRecipe":
+                        let result = createNewRecipe(body);
+                        if (typeof result === "object") {
+                            res.statusCode = 400;
+                            res.statusMessage = JSON.stringify(result);
+                            res.end();
+                            break;
+                        }
 
+                        break;
+                    default:
+                        // Unkonown pu request
+                        break;
+                }
             });
             break;
         default: // Unknown method type
