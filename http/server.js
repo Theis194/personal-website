@@ -58,13 +58,12 @@ const server = http.createServer(async (req, res) =>{
                         const result = createNewRecipe(formData);
 
                         if (typeof result === "object") {
-                            res.statusCode = 400;
-                            res.setHeader("Content-Type", "application/json");
+                            res.writeHead(200, { "Content-Type": "application/json" });
                             res.end(JSON.stringify(result));
                         } else {
                             // Redirect the user to a success page
-                            res.writeHead(302, { "Location": req.headers.referer || "/" });
-                            res.end();
+                            res.writeHead(200, { "Content-Type": "text/plain" });
+                            res.end("/");
                         }
                     });
                     break;
