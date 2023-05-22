@@ -22,7 +22,7 @@
             <hr id="right" class="sideline">
         </div>
 
-        <form class="insidebox" id="recipeForm">
+        <form class="insidebox" id="recipeForm" method="post" action="/submitForm">
             <div class="row">
                 <div class="col-25">
                     <label for="title">Titel</label><br>
@@ -52,7 +52,7 @@
                     <label for="ingredients">Ingredienser</label><br>
                 </div>
                 <div class="col-75">
-                    <textarea id="ingredients" name="ingredients" placeholder="Vand 2 Liter &#10Separere ingredienser med linjeskift &#10For to lister af ingredienser separer med (--- navn)" style="height:75px; overflow: hidden;"></textarea>
+                    <textarea id="ingredients" name="ingredients" placeholder="--- vand --- (titel på ingrediens liste)&#10Vand 2 Liter (ingrediens)&#10Separere ingredienser med linjeskift &#10For to lister af ingredienser separer med (--- navn ---)" style="height:85px; overflow: hidden;"></textarea>
                 </div>
             </div>
             <div class="row">
@@ -68,10 +68,10 @@
                     <label for="duration">Tid i alt</label><br>
                 </div>
                 <div class="col-37 left">
-                    <input type="text" id="durationh" name="duration" placeholder="Timer">
+                    <input type="text" id="durationh" name="durationHours" placeholder="Timer">
                 </div>
                 <div class="col-37 right">
-                    <input type="text" id="durationm" name="duration" placeholder="minutter">
+                    <input type="text" id="durationm" name="durationMinutes" placeholder="minutter">
                 </div>
             </div>
             <div class="row">
@@ -79,10 +79,10 @@
                     <label for="workduration">Arbejdstid</label><br>
                 </div>
                 <div class="col-37 left">
-                    <input type="text" id="workdurationh" name="workduration" placeholder="Timer">
+                    <input type="text" id="workdurationh" name="workdurationHours" placeholder="Timer">
                 </div>
                 <div class="col-37 right">
-                    <input type="text" id="workdurationm" name="workduration" placeholder="Minutter">
+                    <input type="text" id="workdurationm" name="workdurationMinutes" placeholder="Minutter">
                 </div>
             </div>
             <div class="row">

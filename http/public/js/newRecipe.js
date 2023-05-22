@@ -1,4 +1,5 @@
-let  form = document.getElementById("recipeForm");
+// Revert to this way of making *post* requests to make responses easier
+/* let  form = document.getElementById("recipeForm");
 form.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -34,7 +35,7 @@ form.addEventListener("submit", (e) => {
     }).catch(error => {
         console.error("Error sending PUT request:", error);
     });
-});
+}); */
 
 let textareas = []
 textareas.push(document.getElementById("ingredients"));
