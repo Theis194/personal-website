@@ -24,7 +24,7 @@ $(document).ready(function() {
         data: formData,
         success: function(response, status, xhr) {
             if (typeof response === "object") {
-                console.log(response);
+                console.log(response); // This is where alerting the user with what was wrong needs to go
                 return false;
             }
             window.location.href = response;
