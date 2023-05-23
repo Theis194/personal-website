@@ -5,6 +5,8 @@ import path from "path";
 import dotenv from "dotenv";
 dotenv.config();
 
+import { createNewRecipe } from "../Recipe/recipe.js"
+
 const hostname = process.env.HOSTNAME;
 const port = process.env.PORT;
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
@@ -12,10 +14,10 @@ const publicDirectoryPath = path.join(__dirname, "public");
 
 const server = http.createServer(async (req, res) =>{
     let method = req.method;
-    let url = req.url;
+    let _url = req.url;
     switch (method) {
         case "GET": // Read
-            switch (url) {
+            switch (_url) {
                 case "/getThing": // Standard response
                     
                     break;
@@ -45,7 +47,31 @@ const server = http.createServer(async (req, res) =>{
             }
             break;
         case "POST": // Create
+            switch (_url) {
+                case "/submitForm":
+                    let formData = "";
+                    req.on("data", chunk => {
+                        formData += chunk.toString();
+                    });
+                    req.on("end", () => {
+                        // Process the form data
+                        const result = createNewRecipe(formData);
+
+                        if (Array.isArray(result) && result.length > 0) {
+                            res.writeHead(200, { "Content-Type": "application/json" });
+                            res.end(JSON.stringify(result));
+                        } else {
+                            // Redirect the user to a success page
+                            res.writeHead(200, { "Content-Type": "text/plain" });
+                            res.end("/");
+                        }
+                    });
+                    break;
             
+                default:
+                    // Post request does not exist
+                    break;
+            }
             break;
         case "PATCH": // Update
             
@@ -54,16 +80,7 @@ const server = http.createServer(async (req, res) =>{
             
             break;
         case "PUT": // Update/Replace
-            let body = "";
-            // Grabs the data sent by the fetch request
-            req.on("data", (chunk) => {
-                body += chunk.toString();
-                body = JSON.parse(body);
-            });
-
-            req.on("end", async () => {
-
-            });
+            
             break;
         default: // Unknown method type
             res.statusCode = 405;
