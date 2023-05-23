@@ -57,7 +57,7 @@ const server = http.createServer(async (req, res) =>{
                         // Process the form data
                         const result = createNewRecipe(formData);
 
-                        if (typeof result === "object") {
+                        if (Array.isArray(result) && result.length > 0) {
                             res.writeHead(200, { "Content-Type": "application/json" });
                             res.end(JSON.stringify(result));
                         } else {
