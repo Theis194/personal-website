@@ -22,6 +22,7 @@ const server = http.createServer(async (req, res) =>{
                     
                     break;
                 default: // On first entry gives the landing page, else it gives the requested page
+                    req.url = req.url.split("?")[0];
                     const filePath = path.join(publicDirectoryPath, path.normalize(req.url === "/" ? "/html/index.html" : req.url));
                     const extname = path.extname(filePath);
                     let contentType = "text/html";
