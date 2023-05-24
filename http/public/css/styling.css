@@ -133,7 +133,10 @@ li {
     padding: 20px 20px;
     word-wrap: break-word;
     background-color: var(--pastelblue);
-    
+}
+
+.rounded {
+    border-radius: 10px;
 }
 
 .ingredienslist {

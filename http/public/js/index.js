@@ -3,7 +3,7 @@ function createRecipeListItems() {
     let recipeListItem = recipeList.querySelector(".recipelistitem")
     let newRLI = recipeListItem.cloneNode(true);
     console.log(newRLI );
-    newRLI.querySelector("#recipe1desc").textContent = "Cool shit!";
+    newRLI.querySelector("#recipedesc").textContent = "Cool shit!";
     newRLI.addEventListener("click", changePage)
 
     recipeList.appendChild(newRLI);

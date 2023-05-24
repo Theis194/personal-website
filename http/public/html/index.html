@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../css/styling.css">
+        <link rel="stylesheet" href="../css/formStyle.css">
         <title>Kogebog</title>
     </head>
     <body>
@@ -22,54 +23,16 @@
             
             <li class="verticallist" id="recipe-list">
                 <ul class="recipelistitem">
-                    <div class="insidebox">
-                        <table>
-                            <tr>
-                                <td style="width: 50%; vertical-align: top;">
-                                    <span id="recipe1desc">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut ligula pulvinar, malesuada tellus ac, cursus nunc. Phasellus id felis nec orci convallis maximus vitae laoreet lacus. Sed sit amet nunc dui. Nulla in consequat nulla. Vestibulum ut blandit velit. Sed eu dolor vel nisi sodales aliquam et vel leo. Aliquam mi augue, dignissim a lorem eu, pulvinar volutpat odio. Mauris leo sem, venenatis in leo ac, congue lobortis ante. Nulla facilisi. Fusce scelerisque semper tincidunt. Duis mi neque, congue nec tincidunt eu, vestibulum et augue.<br><br>
-                                        Duis tristique gravida suscipit. Donec eu nibh tempor, consectetur velit ut, pulvinar mauris. In condimentum et turpis ut aliquet. Cras hendrerit molestie ligula. Integer dapibus non sapien in sagittis. Donec tincidunt massa quis mauris suscipit, eu auctor ex ullamcorper. Donec eu turpis lacus. Praesent vitae quam et leo dapibus maximus. Pellentesque vel elementum mi.
-                                    </span>
-                                </td>
-                                <td style="width: 50%;">
-                                    <img id="foodImg1" src="../img/boller.jpg">
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </ul>
-                <ul class="recipelistitem">
-                    <div class="insidebox">
-                        <table>
-                            <tr>
-                                <td style="width: 50%; vertical-align: top;">
-                                    <span id="recipe2desc">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut ligula pulvinar, malesuada tellus ac, cursus nunc. Phasellus id felis nec orci convallis maximus vitae laoreet lacus. Sed sit amet nunc dui. Nulla in consequat nulla. Vestibulum ut blandit velit. Sed eu dolor vel nisi sodales aliquam et vel leo. Aliquam mi augue, dignissim a lorem eu, pulvinar volutpat odio. Mauris leo sem, venenatis in leo ac, congue lobortis ante. Nulla facilisi. Fusce scelerisque semper tincidunt. Duis mi neque, congue nec tincidunt eu, vestibulum et augue.<br><br>
-                                        Duis tristique gravida suscipit. Donec eu nibh tempor, consectetur velit ut, pulvinar mauris. In condimentum et turpis ut aliquet. Cras hendrerit molestie ligula. Integer dapibus non sapien in sagittis. Donec tincidunt massa quis mauris suscipit, eu auctor ex ullamcorper. Donec eu turpis lacus. Praesent vitae quam et leo dapibus maximus. Pellentesque vel elementum mi.
-                                    </span>
-                                </td>
-                                <td style="width: 50%;">
-                                    <img id="foodImg2" src="../img/boller.jpg">
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </ul>
-                <ul class="recipelistitem">
-                    <div class="insidebox">
-                        <table>
-                            <tr>
-                                <td style="width: 50%; vertical-align: top;">
-                                    <span id="recipe3desc">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut ligula pulvinar, malesuada tellus ac, cursus nunc. Phasellus id felis nec orci convallis maximus vitae laoreet lacus. Sed sit amet nunc dui. Nulla in consequat nulla. Vestibulum ut blandit velit. Sed eu dolor vel nisi sodales aliquam et vel leo. Aliquam mi augue, dignissim a lorem eu, pulvinar volutpat odio. Mauris leo sem, venenatis in leo ac, congue lobortis ante. Nulla facilisi. Fusce scelerisque semper tincidunt. Duis mi neque, congue nec tincidunt eu, vestibulum et augue.<br><br>
-                                        Duis tristique gravida suscipit. Donec eu nibh tempor, consectetur velit ut, pulvinar mauris. In condimentum et turpis ut aliquet. Cras hendrerit molestie ligula. Integer dapibus non sapien in sagittis. Donec tincidunt massa quis mauris suscipit, eu auctor ex ullamcorper. Donec eu turpis lacus. Praesent vitae quam et leo dapibus maximus. Pellentesque vel elementum mi.
-                                    </span>
-                                </td>
-                                <td style="width: 50%;">
-                                    <img id="foodImg3" src="../img/boller.jpg">
-                                </td>
-                            </tr>
-                        </table>
+                    <div class="insidebox row rounded">
+                        <div  class="col-50">
+                            <img id="foodImg" src="../img/boller.jpg" class="rounded">
+                        </div>
+                        <div class="col-50">
+                            <span id="recipedesc">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut ligula pulvinar, malesuada tellus ac, cursus nunc. Phasellus id felis nec orci convallis maximus vitae laoreet lacus. Sed sit amet nunc dui. Nulla in consequat nulla. Vestibulum ut blandit velit. Sed eu dolor vel nisi sodales aliquam et vel leo. Aliquam mi augue, dignissim a lorem eu, pulvinar volutpat odio. Mauris leo sem, venenatis in leo ac, congue lobortis ante. Nulla facilisi. Fusce scelerisque semper tincidunt. Duis mi neque, congue nec tincidunt eu, vestibulum et augue.<br><br>
+                                Duis tristique gravida suscipit. Donec eu nibh tempor, consectetur velit ut, pulvinar mauris. In condimentum et turpis ut aliquet. Cras hendrerit molestie ligula. Integer dapibus non sapien in sagittis. Donec tincidunt massa quis mauris suscipit, eu auctor ex ullamcorper. Donec eu turpis lacus. Praesent vitae quam et leo dapibus maximus. Pellentesque vel elementum mi.
+                            </span>
+                        </div>
                     </div>
                 </ul>
             </li>
