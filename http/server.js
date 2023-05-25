@@ -6,6 +6,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import { createNewRecipe } from "../Recipe/recipe.js"
+import { createCookie, createUser } from "../usersystem/userHandler.js";
+import { userInfo } from "os";
 
 const hostname = process.env.HOSTNAME;
 const port = process.env.PORT;
@@ -68,9 +70,23 @@ const server = http.createServer(async (req, res) =>{
                         }
                     });
                     break;
-            
-                default:
-                    // Post request does not exist
+                case "/createUser":
+                    let userInfo = "";
+                    req.on("data", chunk => {
+                        userInfo += chunk.toString();
+                    });
+                    req.on("end", () => {
+                        // Process the form data
+                        const result = createUser(userInfo);
+
+                        if (result == true) { // Success
+                            res.writeHead(200, { "Content-Type": "application/json" });
+                            res.end(JSON.stringify(result));
+                        } else { // Error
+                            res.writeHead(400, { "Content-Type": "text/plain" });
+                            res.end(result);
+                        }
+                    });
                     break;
             }
             break;
