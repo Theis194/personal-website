@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <title>Kogebog</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/formStyle.css">
+    </head>
+    <body style="background-image: url(../images/testBaggrund.jpg); background-size: cover;">
+        <form class="boxSignUp center" id="signupForm" method="post" action="/signupForm">
+            <h1 style="padding-top: 25px;">Kogebog</h1>
+            <div class="row">
+                <div class="col-49 left">
+                    <input type="text" id="firstName" name="firstName"  placeholder="First Name" style="margin-top: 12px;">
+                </div>
+                <div class="col-49 right">
+                    <input type="text" id="lastName"  name="lastName" placeholder="Last Name" style="margin-top: 12px;">
+                </div>
+                <div class="col-100">
+                    <input type="email" id="mail" name="mail" placeholder="Email" style="margin-top: 12px;">
+                </div>
+                <div class="col-100">
+                    <input type="password" id="password" name="password" placeholder="Password" style="margin-top: 12px;">
+                </div>
+                <div class="col-100">
+                    <input type="submit" id="button" name="button" value="Sign up" style="margin-top: 12px;">
+                </div>
+                <div class="col-100">
+                    <a href="./loginPage.html" class="signUp">Already have an account?</a>
+                </div>
+            </div>
+        </form>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+        <script src="../js/signupPage.js"></script>
+    </body>
+</html>
