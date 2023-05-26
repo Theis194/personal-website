@@ -8,7 +8,7 @@ class User {
         this.password = password;
         this.favorites = [];
         this.privileges = [];
-        this.userToken = getToken();
+        this.userToken = this.getToken();
     }
 
     getToken() {
@@ -20,7 +20,7 @@ class User {
             return rand() + rand();
         };
     
-        console.log(token());
+        return token();
     }
 }
 

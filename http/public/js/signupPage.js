@@ -12,14 +12,16 @@ $(document).ready(function() {
         url: $(this).attr('action'),
         data: formData,
         success: function(response, status, xhr) {
-            if (typeof response === "object") {
-                console.log(response); // This is where alerting the user with what was wrong needs to go
-                return false;
-            }
-            window.location.href = response;
+            document.cookie = `${response.cookieName}=${response.cookieValue};` +
+            `max-age=${response.cookieOptions.maxAge};`;
         },
         error: function(xhr, status, error) {
           // Handle errors
+          if (JSON.parse(xhr.responseText) === "userExists") {
+            alert("En bruger med den indtastede Email eksistere allerede");
+          } else if (JSON.parse(xhr.responseText) === "invalidEmail") {
+            alert("Emailen eksistere ikke");
+          }
           console.error(error);
         }
       });

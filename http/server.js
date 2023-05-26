@@ -7,7 +7,6 @@ dotenv.config();
 
 import { createNewRecipe } from "../Recipe/recipe.js"
 import { createCookie, createUser } from "../usersystem/userHandler.js";
-import { userInfo } from "os";
 
 const hostname = process.env.HOSTNAME;
 const port = process.env.PORT;
@@ -50,9 +49,9 @@ const server = http.createServer(async (req, res) =>{
             }
             break;
         case "POST": // Create
-            switch (_url) {
-                case "/submitForm":
-                    let formData = "";
+        switch (_url) {
+            case "/submitForm":
+                    //let formData = "";
                     req.on("data", chunk => {
                         formData += chunk.toString();
                     });
@@ -71,20 +70,20 @@ const server = http.createServer(async (req, res) =>{
                     });
                     break;
                 case "/createUser":
-                    let userInfo = "";
+                    let formData = "";
                     req.on("data", chunk => {
-                        userInfo += chunk.toString();
+                        formData += chunk.toString();
                     });
-                    req.on("end", () => {
+                    req.on("end", async () => {
                         // Process the form data
-                        const result = createUser(userInfo);
+                        const result = await createUser(formData);
 
-                        if (result == true) { // Success
+                        if (result !== "invalidEmail" && result !== "userExists") { // Success
                             res.writeHead(200, { "Content-Type": "application/json" });
                             res.end(JSON.stringify(result));
                         } else { // Error
                             res.writeHead(400, { "Content-Type": "text/plain" });
-                            res.end(result);
+                            res.end(JSON.stringify(result));
                         }
                     });
                     break;

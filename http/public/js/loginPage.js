@@ -12,14 +12,13 @@ $(document).ready(function() {
         url: $(this).attr('action'),
         data: formData,
         success: function(response, status, xhr) {
-            if (typeof response === "object") {
-                console.log(response); // This is where alerting the user with what was wrong needs to go
-                return false;
-            }
-            window.location.href = response;
+            document.cookie = `${response.cookie.cookieName}=${response.cookie.cookieValue};` +
+            `max-age=${response.cookie.cookieOptions.maxAge};`;
+            console.log(response);
         },
         error: function(xhr, status, error) {
           // Handle errors
+          console.log(xhr.responseText);
           console.error(error);
         }
       });

@@ -32,9 +32,11 @@ async function insertEntry(collection, newEntry) {
 }
 
 async function checkUser(email) {
+    let client;
+
     try {
         client = await establishConnection();
-        const result = await client.db("cookbook").collection(collection).findOne({email: email});
+        const result = await client.db("cookbook").collection("users").findOne({email: email});
         if (result) {
             return false
         }
