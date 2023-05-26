@@ -8,13 +8,14 @@ $(document).ready(function() {
   
       // Send an AJAX request
       $.ajax({
-        type: 'POST',
+        type: 'GET',
         url: $(this).attr('action'),
         data: formData,
         success: function(response, status, xhr) {
-            document.cookie = `${response.cookie.cookieName}=${response.cookie.cookieValue};` +
-            `max-age=${response.cookie.cookieOptions.maxAge};`;
+            document.cookie = `${response.cookieName}=${response.cookieValue};` +
+            `max-age=${response.cookieOptions.maxAge};`; // Cookie not working ;(
             console.log(response);
+            window.location.href = "/";
         },
         error: function(xhr, status, error) {
           // Handle errors

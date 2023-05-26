@@ -14,6 +14,7 @@ $(document).ready(function() {
         success: function(response, status, xhr) {
             document.cookie = `${response.cookieName}=${response.cookieValue};` +
             `max-age=${response.cookieOptions.maxAge};`;
+            window.location.href = "/";
         },
         error: function(xhr, status, error) {
           // Handle errors

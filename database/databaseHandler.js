@@ -37,10 +37,10 @@ async function checkUser(email) {
     try {
         client = await establishConnection();
         const result = await client.db("cookbook").collection("users").findOne({email: email});
-        if (result) {
+        if (!result) {
             return false
         }
-        return true;
+        return result;
     } catch (error) {
         console.error(error);
     } finally {

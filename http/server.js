@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import { createNewRecipe } from "../Recipe/recipe.js"
-import { createCookie, createUser } from "../usersystem/userHandler.js";
+import { createUser, loginUser } from "../usersystem/userHandler.js";
 
 const hostname = process.env.HOSTNAME;
 const port = process.env.PORT;
@@ -15,12 +15,20 @@ const publicDirectoryPath = path.join(__dirname, "public");
 
 const server = http.createServer(async (req, res) =>{
     let method = req.method;
-    let _url = req.url;
+    let _url = req.url.split("?")[0];
     switch (method) {
         case "GET": // Read
             switch (_url) {
-                case "/getThing": // Standard response
-                    
+                case "/loginUser":
+                    const result = await loginUser(req.url.split("?")[1]);
+
+                        if (result !== "invalidEmail" && result !== "wrongPassword") { // Success
+                            res.writeHead(200, { "Content-Type": "application/json" });
+                            res.end(JSON.stringify(result));
+                        } else { // Error
+                            res.writeHead(400, { "Content-Type": "text/plain" });
+                            res.end(JSON.stringify(result));
+                        }
                     break;
                 default: // On first entry gives the landing page, else it gives the requested page
                     req.url = req.url.split("?")[0];
@@ -49,9 +57,10 @@ const server = http.createServer(async (req, res) =>{
             }
             break;
         case "POST": // Create
+        let formData = "";
         switch (_url) {
             case "/submitForm":
-                    //let formData = "";
+                    formData = "";
                     req.on("data", chunk => {
                         formData += chunk.toString();
                     });
@@ -70,7 +79,7 @@ const server = http.createServer(async (req, res) =>{
                     });
                     break;
                 case "/createUser":
-                    let formData = "";
+                    formData = "";
                     req.on("data", chunk => {
                         formData += chunk.toString();
                     });

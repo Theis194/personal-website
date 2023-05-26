@@ -2,20 +2,13 @@ import cookieParser from 'cookie-parser';
 import bcrypt from "bcrypt";
 import { User } from "./user.js";
 import { insertEntry, checkUser } from "../database/databaseHandler.js";
-import { isEmail } from "../http/inputValidation.js";
+import { isEmail, extractData } from "../http/inputValidation.js";
 
-export { createUser, createCookie }
+export { createUser, loginUser, createCookie }
 
 async function createUser(query) {
-    // Step 1: Split the string by '&'
-    const keyValuePairs = query.split('&');
+    const data = extractData(query);
 
-    // Step 2-4: Extract key-value pairs and store them in an object
-    const data = {};
-    for (let i = 0; i < keyValuePairs.length; i++) {
-    const [key, value] = keyValuePairs[i].split('=');
-    data[key] = value;
-    }
     data["mail"] = data["mail"].replace("%40", "@");
 
     let validEmail = isEmail(data["mail"]);
@@ -45,13 +38,37 @@ async function createUser(query) {
 
     let exist = await checkUser(data["mail"])
 
-    if (exist) {
+    if (exist == false) {
         let result = await insertEntry("users", newUser);
         if (result) {
             return createCookie(newUser);
         }
     } else {
         return "userExists";
+    }
+}
+
+async function loginUser(query) {
+    const data = extractData(query);
+    data["mail"] = data["mail"].replace("%40", "@");
+
+    if (!isEmail(data["mail"])) {
+        return "invalidEmail"
+    }
+    
+    const user = await checkUser(data["mail"])
+
+    let compare = await comparePassword(data["password"], user.password).then(result => {
+        if (result) {
+            return true;
+        } else {
+            return "wrongPassword";
+        }
+    });
+
+    if (compare) {
+        let cookie = createCookie(user);
+        return  cookie
     }
 }
 
@@ -67,11 +84,24 @@ function createCookie(user) {
         maxAge: 1000 * 60 * 60 * 24, // 1 day
         httpOnly: true,
         secure: true,
-        sameSite: 'lax'
+        sameSite: "lax"
     };
     const cookieValue = JSON.stringify(userData);
   
     const signedCookie = cookieParser.signedCookie(cookieValue, process.env.COOKIE_SECRET);
     
-    return { cookieName: 'currentUser', cookieValue: signedCookie, cookieOptions };
+    let cookie = { cookieName: 'currentUser', cookieValue: signedCookie, cookieOptions };
+    return cookie;
+}
+
+async function comparePassword(plainPassword, hashedPassword) {
+    return new Promise((resolve, reject) => {
+        bcrypt.compare(plainPassword, hashedPassword, (err, result) => {
+            if (err) {
+                reject(err);
+                return;
+            }
+            resolve(result);
+        });
+    });
 }
