@@ -66,10 +66,11 @@ async function loginUser(query) {
         }
     });
 
-    if (compare) {
+    if (compare == true) {
         let cookie = createCookie(user);
         return  cookie
     }
+    return compare;
 }
 
 function createCookie(user) {
@@ -84,7 +85,8 @@ function createCookie(user) {
         maxAge: 1000 * 60 * 60 * 24, // 1 day
         httpOnly: true,
         secure: true,
-        sameSite: "lax"
+        sameSite: "lax",
+        path: "/"
     };
     const cookieValue = JSON.stringify(userData);
   
