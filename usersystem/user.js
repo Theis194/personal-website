@@ -7,7 +7,7 @@ class User {
         this.email = email;
         this.password = password;
         this.favorites = [];
-        this.privileges = [];
+        this.privileges = []; // Author, Admin, ...
         this.userToken = this.getToken();
     }
 

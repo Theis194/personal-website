@@ -1,10 +1,10 @@
 import cookieParser from 'cookie-parser';
 import bcrypt from "bcrypt";
 import { User } from "./user.js";
-import { insertEntry, checkUser } from "../database/databaseHandler.js";
+import { insertEntry, checkUser, updateUserDB } from "../database/databaseHandler.js";
 import { isEmail, extractData } from "../http/inputValidation.js";
 
-export { createUser, loginUser, createCookie }
+export { createUser, loginUser, updateUser, createCookie }
 
 async function createUser(query) {
     const data = extractData(query);
@@ -73,6 +73,25 @@ async function loginUser(query) {
     return compare;
 }
 
+async function updateUser(user) {
+    let data = extractData(user);
+    data["emailU"] = data["emailU"].replace("%40", "@");
+
+    user = await checkUser(data["emailU"]);
+
+    let privs = extractprivileges(data["privileges"]);
+    for (let i = 0; i < privs.length; i++) {
+        if (!user.privileges.includes(privs[i])) {
+            user.privileges.push(privs[i]);
+        } else {
+            user.privileges.splice(user.privileges.indexOf(privs[i]), 1);
+        }
+    }
+    
+    let result = await updateUserDB(user);
+    return result;
+}
+
 function createCookie(user) {
     const userData = {
         firstName: user.fName,
@@ -106,4 +125,8 @@ async function comparePassword(plainPassword, hashedPassword) {
             resolve(result);
         });
     });
+}
+
+function extractprivileges(privString) {
+    return privString.split("%2C+");
 }
