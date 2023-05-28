@@ -9,9 +9,10 @@
     </head>
     <body>
         <div class="topnav">
-            <a href="../html/index.html" class="active">Home</a>
-            <a href="../html/newRecipe.html">Ny Opskrift</a>
-            <a href="#boller">Boller</a>
+            <a href="/" class="active">Home</a>
+            <a href="../html/loginPage.html" style="float: right;">Login</a>
+            <a href="../html/adminPage.html" style="float: right;">Admin</a>
+            <a href="../html/newRecipe.html" style="float: right;">Ny Opskrift</a>
         </div>
         
         <div class="box center" style="margin-bottom: 20px;">
@@ -23,7 +24,7 @@
             
             <li class="verticallist" id="recipe-list">
                 <ul class="recipelistitem">
-                    <div class="insidebox row rounded">
+                    <div class="insidebox row rounded" data-recipeid="">
                         <div  class="col-50">
                             <img id="foodImg" src="../img/boller.jpg" class="rounded">
                         </div>

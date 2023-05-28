@@ -6,6 +6,9 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import { createNewRecipe } from "../Recipe/recipe.js"
+import { createUser, loginUser, updateUser } from "../usersystem/userHandler.js";
+import { checkUser } from "../database/databaseHandler.js";
+import { extractData } from "./inputValidation.js";
 
 const hostname = process.env.HOSTNAME;
 const port = process.env.PORT;
@@ -14,14 +17,45 @@ const publicDirectoryPath = path.join(__dirname, "public");
 
 const server = http.createServer(async (req, res) =>{
     let method = req.method;
-    let _url = req.url;
+    let _url = req.url.split("?")[0];
+    let formData = "";
     switch (method) {
         case "GET": // Read
+        let result;
             switch (_url) {
-                case "/getThing": // Standard response
-                    
+                case "/loginUser":
+                    result = await loginUser(req.url.split("?")[1]);
+
+                    if (result !== "invalidEmail" && result !== "wrongPassword") { // Success
+                        res.writeHead(200, { "Content-Type": "application/json" });
+                        res.end(JSON.stringify(result));
+                    } else { // Error
+                        res.writeHead(400, { "Content-Type": "text/plain" });
+                        res.end(JSON.stringify(result));
+                    }
+                    break;
+                case "/getUser":
+                    const data = extractData(req.url.split("?")[1])
+                    data["email"] = data["email"].replace("%40", "@");
+                    let user = await checkUser(data.email);
+
+                    result = {
+                        fName: user.fName,
+                        lName: user.lName,
+                        email: user.email,
+                        privileges: user.privileges
+                    }
+
+                    if (typeof result === "object") {
+                        res.writeHead(200, { "Content-Type": "application/json" });
+                        res.end(JSON.stringify(result));
+                    } else {
+                        res.writeHead(400, { "Content-Type": "text/plain" });
+                        res.end(JSON.stringify("userNotFound"));
+                    }
                     break;
                 default: // On first entry gives the landing page, else it gives the requested page
+                    req.url = req.url.split("?")[0];
                     const filePath = path.join(publicDirectoryPath, path.normalize(req.url === "/" ? "/html/index.html" : req.url));
                     const extname = path.extname(filePath);
                     let contentType = "text/html";
@@ -47,9 +81,9 @@ const server = http.createServer(async (req, res) =>{
             }
             break;
         case "POST": // Create
-            switch (_url) {
-                case "/submitForm":
-                    let formData = "";
+        switch (_url) {
+            case "/submitForm":
+                    formData = "";
                     req.on("data", chunk => {
                         formData += chunk.toString();
                     });
@@ -67,9 +101,23 @@ const server = http.createServer(async (req, res) =>{
                         }
                     });
                     break;
-            
-                default:
-                    // Post request does not exist
+                case "/createUser":
+                    formData = "";
+                    req.on("data", chunk => {
+                        formData += chunk.toString();
+                    });
+                    req.on("end", async () => {
+                        // Process the form data
+                        const result = await createUser(formData);
+
+                        if (result !== "invalidEmail" && result !== "userExists") { // Success
+                            res.writeHead(200, { "Content-Type": "application/json" });
+                            res.end(JSON.stringify(result));
+                        } else { // Error
+                            res.writeHead(400, { "Content-Type": "text/plain" });
+                            res.end(JSON.stringify(result));
+                        }
+                    });
                     break;
             }
             break;
@@ -80,8 +128,23 @@ const server = http.createServer(async (req, res) =>{
             
             break;
         case "PUT": // Update/Replace
-            
-            break;
+            case "updateUser":
+                formData = "";
+                req.on("data", chunk => {
+                    formData += chunk.toString();
+                });
+                req.on("end", async () => {
+                    let result = await updateUser(formData);
+
+                    if (result = true) { // Success
+                        res.writeHead(200, { "Content-Type": "application/json" });
+                        res.end(JSON.stringify("Succesfully updated user"));
+                    } else { // Error
+                        res.writeHead(400, { "Content-Type": "text/plain" });
+                        res.end(JSON.stringify(result));
+                    }
+                });
+                break;
         default: // Unknown method type
             res.statusCode = 405;
             res.setHeader("Allow", "GET, POST, PATCH, DELETE, PUT");

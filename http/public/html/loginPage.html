@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <title>Kogebog</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/formStyle.css">
+    </head>
+    <body style="background-image: url(../img/food.jpg); background-size: cover;">
+        <form class="boxLogin center" id="loginForm" method="get" action="/loginUser">
+            <h1 style="padding-top: 25px;">Kogebog</h1>
+            <div class="row">
+                <div class="col-100">
+                    <input type="text" id="mail" name="mail" placeholder="Email" style="margin-top: 12px;">
+                </div>
+                <div class="col-100">
+                    <input type="password" id="password" name="password" placeholder="Password" style="margin-top: 12px;">
+                </div>  
+                <div class="col-100">
+                    <input type="submit" id="login" name="login" value="Login" style="margin-top: 12px;">
+                </div> 
+                <div class="col-100">
+                    <a href="./signupPage.html" class="signUp">Don't have an account?</a>
+                </div>
+            </div>
+        </form>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+        <script src="../js/loginPage.js"></script>
+    </body>
+</html>

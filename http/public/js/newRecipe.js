@@ -16,11 +16,13 @@ $(document).ready(function() {
   
       // Serialize the form data
       var formData = $(this).serialize();
+
+      let user =JSON.parse(JSON.parse(getCookie("currentUser")));
   
       // Send an AJAX request
       $.ajax({
         type: 'POST',
-        url: $(this).attr('action'),
+        url: `${$(this).attr('action')}&${currentUserCookie.firstName + " " + currentUserCookie.lastName}`,
         data: formData,
         success: function(response, status, xhr) {
             if (typeof response === "object") {
@@ -36,9 +38,19 @@ $(document).ready(function() {
       });
     });
 });
-  
-  
-  
-  
-  
-  
+
+function getCookie(cookieName) {
+  let name = cookieName + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let cookieArray = decodedCookie.split(";");
+
+  for (let i = 0; i < cookieArray.length; i++) {
+      let cookie = cookieArray[i].trim();
+
+       if (cookie.indexOf(name) === 0) {
+          let cookieValue = cookie.substring(name.length);
+          return cookieValue;
+      }
+  }
+  return null; // Return null if the cookie is not found
+}

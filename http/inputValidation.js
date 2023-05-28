@@ -1,4 +1,4 @@
-export { inputValidation, validateObject }
+export { inputValidation, validateObject, isEmail, extractData }
 
 function inputValidation(input, expected) {
     if (input === undefined || input === null) {
@@ -31,4 +31,26 @@ function validateObject(object, valKeys) {
         i++;
     }
     return inputFailed;
+}
+
+function isEmail(email) {
+    return String(email)
+        .toLowerCase()
+        .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+}
+
+function extractData(query) {
+    // Step 1: Split the string by '&'
+    const keyValuePairs = query.split('&');
+
+    // Step 2-4: Extract key-value pairs and store them in an object
+    const data = {};
+    for (let i = 0; i < keyValuePairs.length; i++) {
+    const [key, value] = keyValuePairs[i].split('=');
+    data[key] = value;
+    }
+
+    return data;
 }
