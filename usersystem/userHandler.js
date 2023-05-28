@@ -97,7 +97,8 @@ function createCookie(user) {
         firstName: user.fName,
         lastName: user.lName,
         email: user.email,
-        userToken: user.userToken
+        userToken: user.userToken,
+        privileges: user.privileges
     };
 
     const cookieOptions = {
