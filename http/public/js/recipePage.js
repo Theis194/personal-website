@@ -1,12 +1,9 @@
 // Get the current URL
 let currentUrl = window.location.href;
 
-console.log(currentUrl.split("?")[1]); // Gets the query
-
 fetch(`/getRecipe?id=${currentUrl.split("?")[1]}`, {method: "GET"})
     .then(response => response.json())
     .then(data => {
-        console.log(data);
         populatePage(data);
     })
     .catch(error => console.error(error));
@@ -51,7 +48,6 @@ function populatePage(recipe) {
         const section = recipe.ingredients[i];
         const sectionName = section.sectionName;
         const data = section.data;
-        //console.log("Section:", sectionName);
 
         let ingrediensClone = ingredienser.cloneNode(true);
         ingrediensClone.querySelector("h4").textContent = sectionName;
@@ -67,13 +63,7 @@ function populatePage(recipe) {
             ingrediens.remove();
             newIngredient.querySelector("label").textContent = `${key} ${value} ${unit}`;
             ingrediensClone.querySelector("#ingredienslist").appendChild(newIngredient);
-
-            /* console.log("Key:", key);
-            console.log("Value:", value);
-            console.log("Unit:", unit);
-            console.log("-----------"); */
         }
-
         ingredienser.parentElement.appendChild(ingrediensClone);
     }
     ingredienser.remove();
