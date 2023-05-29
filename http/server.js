@@ -1,4 +1,4 @@
-import http from "http";
+import https from "https";
 import fs from "fs";
 import url from "url";
 import path from "path";
@@ -15,7 +15,13 @@ const port = process.env.PORT;
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const publicDirectoryPath = path.join(__dirname, "public");
 
-const server = http.createServer(async (req, res) =>{
+// Load SSL certificates
+const options = {
+    key: fs.readFileSync(process.env.KEYURL),
+    cert: fs.readFileSync(process.env.CERTURL)
+};
+
+const server = https.createServer(options, async (req, res) =>{
     let method = req.method;
     let _url = req.url.split("?")[0];
     let formData = "";
@@ -204,5 +210,5 @@ function getContentType(extname) {
 }
 
 server.listen(port, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
+    console.log(`Server running at https://${hostname}:${port}/`);
 });
