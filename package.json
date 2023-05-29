@@ -16,6 +16,7 @@
     "dotenv": "^16.0.3",
     "fs": "^0.0.1-security",
     "http": "^0.0.1-security",
+    "https": "^1.0.0",
     "jquery": "^3.7.0",
     "jquery-form": "^4.3.0",
     "mongodb": "^5.5.0",
