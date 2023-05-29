@@ -7,11 +7,11 @@ fetch("/getRecipes", {method: "GET"})
     .catch(error => console.error(error));
 
 function createRecipeListItems(recipes) {
+    console.log(recipes);
     let recipeList = document.querySelector("#recipe-list");
     let recipeListItem = recipeList.querySelector(".recipelistitem")
-    let newRLI = recipeListItem.cloneNode(true);
-    console.log(newRLI );
     for (let i = 0; i < recipes.length; i++) {
+        let newRLI = recipeListItem.cloneNode(true);
         newRLI.querySelector("#foodImg").src = recipes[i].imgPath; // Sets the img path
         newRLI.querySelector("#recipedesc").textContent = recipes[i].description;
         newRLI.addEventListener("click", changePage);
