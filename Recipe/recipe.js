@@ -47,6 +47,7 @@ function createNewRecipe(recipe) {
     data[key] = value;
     }
 
+    data.title = decodeURIComponent(data.title);
     data.image = decodeURIComponent(data.image);
     data.description = decodeURIComponent(data.description);
     data.description = data.description.split("+").join(" ");
