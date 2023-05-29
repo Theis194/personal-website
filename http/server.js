@@ -26,7 +26,6 @@ const server = http.createServer(async (req, res) =>{
             switch (_url) {
                 case "/loginUser":
                     result = await loginUser(req.url.split("?")[1]);
-                    console.log(result);
 
                     if (result !== "invalidEmail" && result !== "wrongPassword") { // Success
                         res.writeHead(200, { "Content-Type": "application/json" });
