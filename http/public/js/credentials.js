@@ -10,7 +10,7 @@ function setNavBar() {
     }
 
     $(function(){
-        $("#includedNav").load("/html/navBar/navBar.html", function() {
+        $("#includedNav").load("/html/navBar/navbar.html", function() {
             authorRemovables.push("#nyOpskrift");
             adminRemovables.push("#admin");
             switch (window.location.href.split("/")[4]) {
