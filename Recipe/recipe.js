@@ -4,7 +4,7 @@ import { insertEntry } from "../database/databaseHandler.js";
 export { createNewRecipe }
 
 class Recipe {
-    constructor(title, description, imgPath, time, workTime, shelfLife, servings, freezable, ingredients, procedure) {
+    constructor(title, description, imgPath, time, workTime, shelfLife, servings, freezable, ingredients, procedure, author) {
         this.title = title /*  Expects: string */
         this.description = description; /*  Expects: string */
         this.imgPath = imgPath; /*  Expects: string */
@@ -15,6 +15,7 @@ class Recipe {
         this.freezable = freezable; /*  Expects bool */
         this.procedure = procedure; /*  Expects string */
         this.ingredients = ingredients; /*  Expects list of ingredients */
+        this.author = author; /* Expects string */
     }
 }
 
@@ -30,20 +31,9 @@ let recipeValKeys = [
     "skip",
     "num",
     "num",
-    "skip"
+    "skip",
+    "str"
 ]
-
-class Ingredient{
-    constructor (amount, unit, type) {
-        this.amount = amount;
-        this.unit = unit;
-        this.type = type;
-    }
-
-    static combine() {
-        return `${amount} ${unit} ${type}`;
-    }
-}
 
 function createNewRecipe(recipe) {
     let result = [];
@@ -56,6 +46,12 @@ function createNewRecipe(recipe) {
     const [key, value] = keyValuePairs[i].split('=');
     data[key] = value;
     }
+
+    data.image = decodeURIComponent(data.image);
+    data.description = decodeURIComponent(data.description);
+    data.description = data.description.split("+").join(" ");
+    data.procedure = decodeURIComponent(data.procedure);
+    data.procedure = data.procedure.split("+").join(" ");
 
     data.ingredients = extractIngredients(data.ingredients);
     if (data.ingredients.length <= 0) {
@@ -85,16 +81,14 @@ function createNewRecipe(recipe) {
         +data.servings,
         data.freezable,
         data.ingredients,
-        data.procedure
+        data.procedure,
+        data.author
     )
-
+    // Need to check if result contains anything before inserting
+    if (result.length > 0) {
+        return result;
+    }
     insertEntry("recipes", newRecipe);
-    
-    return result;
-
-    //return {test: "test", test2: "test2"};  // this returns the object to the website
-    // This needs to return true if ingredients is valid
-    // and return an object stating what is wrong
 }
 
 function extractIngredients(ingredients) {
@@ -111,9 +105,9 @@ function extractIngredients(ingredients) {
 
     const extractedLines = sectionText.split('\n');
     const sectionData = extractedLines.map(line => {
-        const [key, value] = line.trim().split('+');
+        const [key, value, unit] = line.trim().split('+');
         const decodedValue = decodeURIComponent(value);
-        return { key, value: decodedValue };
+        return { key, value: decodedValue, unit };
     });
 
     extractedData.push({ sectionName, data: sectionData });
@@ -165,8 +159,6 @@ let obj = {
     servings: "e",
     freezable: true,
   }
-
-//console.log(extractIngredients("a").length);
 
 /*  Converts any string containing a number to a number
 let num = "3.1415";

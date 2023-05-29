@@ -2,7 +2,7 @@ import { MongoClient, ObjectId } from 'mongodb';
 import dotenv from 'dotenv';
 dotenv.config;
 
-export{ insertEntry, checkUser, updateUserDB }
+export{ insertEntry, getRecipes, getRecipeById, checkUser, updateUserDB }
 
 async function establishConnection() {
     const uri = process.env.DATABASE_URL;
@@ -13,6 +13,20 @@ async function establishConnection() {
         return client;
     } catch (error) {
         console.error(error);
+    }
+}
+
+async function basicFunction() {
+    let client;
+
+    try {
+        client = await establishConnection();
+
+
+    } catch (error) {
+        console.error(error);
+    } finally {
+        await client.close();
     }
 }
 
@@ -30,6 +44,45 @@ async function insertEntry(collection, newEntry) {
         await client.close();
     }
 }
+
+      /////////////////////////////////////////////////////////////////////////////
+   ///////                                              Recipe functions                                                     ///////
+/////////////////////////////////////////////////////////////////////////////
+
+async function getRecipes() {
+    let client;
+
+    try {
+        client = await establishConnection();
+
+        const result = await client.db("cookbook").collection("recipes").find().limit(5).toArray();
+
+        return result;
+    } catch (error) {
+        console.error(error);
+    } finally {
+        await client.close();
+    }
+}
+
+async function getRecipeById(id) {
+    let client;
+
+    try {
+        client = await establishConnection();
+        const result = await client.db("cookbook").collection("recipes").findOne({_id: new ObjectId(id)})
+
+        return result
+    } catch (error) {
+        console.error(error);
+    } finally {
+        await client.close();
+    }
+}
+
+      /////////////////////////////////////////////////////////////////////////////
+   ////////                                           User System functions                                        /////////
+/////////////////////////////////////////////////////////////////////////////
 
 async function checkUser(email) {
     let client;

@@ -9,6 +9,7 @@ textareas.forEach(textarea => {
       };
 });
 
+
 $(document).ready(function() {
     // Intercept the form submission
     $('#recipeForm').submit(function(e) {
@@ -22,8 +23,8 @@ $(document).ready(function() {
       // Send an AJAX request
       $.ajax({
         type: 'POST',
-        url: `${$(this).attr('action')}&${currentUserCookie.firstName + " " + currentUserCookie.lastName}`,
-        data: formData,
+        url: $(this).attr('action'),
+        data: `${formData}&author=${user.firstName + " " + user.lastName}`,
         success: function(response, status, xhr) {
             if (typeof response === "object") {
                 console.log(response); // This is where alerting the user with what was wrong needs to go
