@@ -7,7 +7,7 @@ dotenv.config();
 
 import { createNewRecipe } from "../Recipe/recipe.js"
 import { createUser, loginUser, updateUser } from "../usersystem/userHandler.js";
-import { checkUser } from "../database/databaseHandler.js";
+import { getRecipes, getRecipeById, checkUser } from "../database/databaseHandler.js";
 import { extractData } from "./inputValidation.js";
 
 const hostname = process.env.HOSTNAME;
@@ -22,6 +22,7 @@ const server = http.createServer(async (req, res) =>{
     switch (method) {
         case "GET": // Read
         let result;
+        let data;
             switch (_url) {
                 case "/loginUser":
                     result = await loginUser(req.url.split("?")[1]);
@@ -35,7 +36,7 @@ const server = http.createServer(async (req, res) =>{
                     }
                     break;
                 case "/getUser":
-                    const data = extractData(req.url.split("?")[1])
+                    data = extractData(req.url.split("?")[1])
                     data["email"] = data["email"].replace("%40", "@");
                     let user = await checkUser(data.email);
 
@@ -52,6 +53,29 @@ const server = http.createServer(async (req, res) =>{
                     } else {
                         res.writeHead(400, { "Content-Type": "text/plain" });
                         res.end(JSON.stringify("userNotFound"));
+                    }
+                    break;
+                case "/getRecipes":
+                    result = await getRecipes();
+
+                    if (result) {
+                        res.writeHead(200, { "Content-Type": "application/json" });
+                        res.end(JSON.stringify(result));
+                    } else {
+                        res.writeHead(400, { "Content-Type": "text/plain" });
+                        res.end(JSON.stringify("noRecipesFound"));
+                    }
+                    break;
+                case "/getRecipe":
+                    data = extractData(req.url.split("?")[1]);
+                    result = await getRecipeById(data.id);
+
+                    if (result) {
+                        res.writeHead(200, { "Content-Type": "application/json" });
+                        res.end(JSON.stringify(result));
+                    } else {
+                        res.writeHead(400, { "Content-Type": "text/plain" });
+                        res.end(JSON.stringify("noRecipesFound"));
                     }
                     break;
                 default: // On first entry gives the landing page, else it gives the requested page
@@ -110,7 +134,7 @@ const server = http.createServer(async (req, res) =>{
                         // Process the form data
                         const result = await createUser(formData);
 
-                        if (result !== "invalidEmail" && result !== "userExists") { // Success
+                        if (result) { // Success
                             res.writeHead(200, { "Content-Type": "application/json" });
                             res.end(JSON.stringify(result));
                         } else { // Error

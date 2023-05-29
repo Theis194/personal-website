@@ -35,18 +35,6 @@ let recipeValKeys = [
     "str"
 ]
 
-class Ingredient{
-    constructor (amount, unit, type) {
-        this.amount = amount;
-        this.unit = unit;
-        this.type = type;
-    }
-
-    static combine() {
-        return `${amount} ${unit} ${type}`;
-    }
-}
-
 function createNewRecipe(recipe) {
     let result = [];
     // Step 1: Split the string by '&'
@@ -58,6 +46,12 @@ function createNewRecipe(recipe) {
     const [key, value] = keyValuePairs[i].split('=');
     data[key] = value;
     }
+
+    data.image = decodeURIComponent(data.image);
+    data.description = decodeURIComponent(data.description);
+    data.description = data.description.split("+").join(" ");
+    data.procedure = decodeURIComponent(data.procedure);
+    data.procedure = data.procedure.split("+").join(" ");
 
     data.ingredients = extractIngredients(data.ingredients);
     if (data.ingredients.length <= 0) {

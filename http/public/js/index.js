@@ -1,18 +1,24 @@
-function createRecipeListItems() {
+fetch("/getRecipes", {method: "GET"})
+    .then(response => response.json())
+    .then(data => {
+        //Do something with data
+        createRecipeListItems(data);
+    })
+    .catch(error => console.error(error));
+
+function createRecipeListItems(recipes) {
     let recipeList = document.querySelector("#recipe-list");
     let recipeListItem = recipeList.querySelector(".recipelistitem")
     let newRLI = recipeListItem.cloneNode(true);
     console.log(newRLI );
-    newRLI.querySelector("#recipedesc").textContent = "Cool shit!";
-    newRLI.addEventListener("click", changePage);
-    newRLI.querySelector(".insidebox.row.rounded").dataset.recipeid = "1234"
-
-    recipeList.appendChild(newRLI);
+    for (let i = 0; i < recipes.length; i++) {
+        newRLI.querySelector("#foodImg").src = recipes[i].imgPath; // Sets the img path
+        newRLI.querySelector("#recipedesc").textContent = recipes[i].description;
+        newRLI.addEventListener("click", changePage);
+        newRLI.querySelector(".insidebox.row.rounded").dataset.recipeid = recipes[i]._id;
+        recipeList.appendChild(newRLI);
+    }
 }
-
-window.addEventListener("load", createRecipeListItems);
-/* window.addEventListener("load", removeClutter); */
-/* window.load = createRecipeListItems(); */
 
 function changePage(e) { // this changes page to the recupePage with query
     let targetElem = e.target;
@@ -22,10 +28,3 @@ function changePage(e) { // this changes page to the recupePage with query
     let recipeId = targetElem.dataset.recipeid;
     window.location.href = `../html/recipePage.html?${recipeId}`;
 }
-
-/* 
-    TODO:
-        Fetch recipes from database
-        Populate page with recipes (add recipeid from database)
-        In recipePage.js fetch using the provided id the  recipe
-*/
