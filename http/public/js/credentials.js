@@ -27,12 +27,12 @@ function setNavBar() {
             if (activeUser == true) {
                 if (!currentUser.privileges.includes("author")) {
                     for (let i = 0; i < authorRemovables.length; i++) {
-                        authorRemovables[i].remove();
+                        $(authorRemovables[i]).remove();
                     }
                 }
                 if (!currentUser.privileges.includes("admin")) {
                     for (let i = 0; i < adminRemovables.length; i++) {
-                        adminRemovables[i].remove();
+                        $(adminRemovables[i]).remove();
                     }
                 }
             } else if (activeUser == false) {
