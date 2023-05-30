@@ -17,6 +17,7 @@ function createRecipeListItems(recipes) {
         newRLI.querySelector(".insidebox.row.rounded").dataset.recipeid = recipes[i]._id;
         recipeList.appendChild(newRLI);
     }
+    recipeListItem.remove();
 }
 
 function changePage(e) { // this changes page to the recupePage with query
