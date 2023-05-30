@@ -79,14 +79,30 @@ async function updateUser(user) {
 
     user = await checkUser(data["emailU"]);
 
-    let privs = extractprivileges(data["privileges"]);
+    if (data.admin != undefined) {
+        if (!user.privileges.includes("admin")) {
+            user.privileges.push("admin");
+        }
+    } else {
+        user.privileges.splice(user.privileges.indexOf("admin"), 1);
+    }
+    
+    if (data.author != undefined) {
+        if (!user.privileges.includes("author")) {
+            user.privileges.push("author");
+        } 
+    } else {
+        user.privileges.splice(user.privileges.indexOf("author"), 1);
+    }
+
+    /* let privs = extractprivileges(data["privileges"]);
     for (let i = 0; i < privs.length; i++) {
         if (!user.privileges.includes(privs[i])) {
             user.privileges.push(privs[i]);
         } else {
             user.privileges.splice(user.privileges.indexOf(privs[i]), 1);
         }
-    }
+    } */
     
     let result = await updateUserDB(user);
     return result;

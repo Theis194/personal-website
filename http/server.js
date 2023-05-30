@@ -44,6 +44,7 @@ const server = https.createServer(options, async (req, res) =>{
                 case "/getUser":
                     data = extractData(req.url.split("?")[1])
                     data["email"] = data["email"].replace("%40", "@");
+                    data["email"]  = data["email"] .toLowerCase();
                     let user = await checkUser(data.email);
 
                     result = {
