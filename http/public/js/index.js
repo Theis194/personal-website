@@ -7,7 +7,6 @@ fetch("/getRecipes", {method: "GET"})
     .catch(error => console.error(error));
 
 function createRecipeListItems(recipes) {
-    console.log(recipes);
     let recipeList = document.querySelector("#recipe-list");
     let recipeListItem = recipeList.querySelector(".recipelistitem")
     for (let i = 0; i < recipes.length; i++) {
