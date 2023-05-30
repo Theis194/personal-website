@@ -4,13 +4,19 @@ function insertUserData(user) {
     updateUser.querySelector("#fName").value = user.fName;
     updateUser.querySelector("#lName").value = user.lName;
     updateUser.querySelector("#emailU").value = user.email;
-    updateUser.querySelector("#privileges").value = "";
+    let authorCheck = updateUser.querySelector("#author");
+    let adminCheck = updateUser.querySelector("#admin");
+    authorCheck.checked = false;
+    adminCheck.checked = false;
     for (let i = 0; i < user.privileges.length; i++) {
-        if (i+1 == user.privileges.length) {
-            updateUser.querySelector("#privileges").value += `${user.privileges[i]}`;
+        switch (user.privileges[i]) {
+          case "author":
+            authorCheck.checked = true;
+            break;
+          case "admin":
+            adminCheck.checked = true;
             break;
         }
-        updateUser.querySelector("#privileges").value += `${user.privileges[i]}, `;
     }
 }
 
