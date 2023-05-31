@@ -14,6 +14,7 @@ function populatePage(recipe) {
     let description = document.querySelector("#description");
     let img = document.querySelector("#img");
     let procedure = document.querySelector("#Fremgangsmåde");
+    let author = document.querySelector("#author");
 
     // Total time, work time, shelflife, freezable, and servings
     let tTime = document.querySelector("#tTime");
@@ -32,6 +33,7 @@ function populatePage(recipe) {
     description.textContent = recipe.description;
     img.src = recipe.imgPath;
     procedure.innerHTML = recipe.procedure;
+    author.textContent += recipe.author;
 
     tTime.querySelector("strong").textContent = recipe.time;
     wTime.querySelector("strong").textContent = recipe.workTime;
