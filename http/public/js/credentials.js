@@ -3,6 +3,7 @@ window.addEventListener("DOMContentLoaded", setNavBar);
 function setNavBar() {
     let authorRemovables = [];
     let adminRemovables = [];
+    let userRemovables = [];
     let currentUser = JSON.parse(JSON.parse(getCookie("currentUser")));
     let activeUser = false;
     if (currentUser != null) {
@@ -15,12 +16,16 @@ function setNavBar() {
         $("#includedNav").load("/html/navBar/navbar.html", function() {
             authorRemovables.push("#nyOpskrift");
             adminRemovables.push("#admin");
+            userRemovables.push("#favorites")
             switch (window.location.href.split("/")[4]) {
                 case "newRecipe.html":
                     $("#nyOpskrift").addClass("active");
                     break;
                 case "adminPage.html":
                     $("#admin").addClass("active");
+                    break;
+                case "favoritesPage.html":
+                    $("#favorites").addClass("active");
                     break;
                 default:
                     $("#home").addClass("active");
@@ -43,6 +48,9 @@ function setNavBar() {
                 }
                 for (let i = 0; i < adminRemovables.length; i++) {
                     $(adminRemovables[i]).remove();
+                }
+                for (let i = 0; i < userRemovables.length; i++) {
+                    $(userRemovables[i]).remove();
                 }
             }
         }); 

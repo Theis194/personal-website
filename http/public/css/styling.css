@@ -201,7 +201,7 @@ li {
     width:100%;
     font-size:0;
     display: flex;
- }
+}
 
 #left, #middle, #right {
     display:inline-block;
@@ -209,20 +209,20 @@ li {
     zoom:2;
     vertical-align:top;
     font-size:13px;
- }
+}
  
- #left {
+#left {
     width:40%;
     float: left;
- }
+}
  
- #middle {
+#middle {
     width:20%;
     margin: auto;
     text-align: center;
- }
+}
  
- #right {
+#right {
     width:40%;
     float: right;
- }
+}
