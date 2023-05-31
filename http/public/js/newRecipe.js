@@ -1,6 +1,7 @@
 let textareas = []
 textareas.push(document.getElementById("ingredients"));
 textareas.push(document.getElementById("description"));
+textareas.push(document.getElementById("procedure"));
 
 textareas.forEach(textarea => {
     textarea.oninput = function() {
