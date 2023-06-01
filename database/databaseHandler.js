@@ -2,7 +2,15 @@ import { MongoClient, ObjectId } from 'mongodb';
 import dotenv from 'dotenv';
 dotenv.config;
 
-export{ insertEntry, getRecipes, getRecipeById, checkUser, updateUserDB }
+export{ 
+    insertEntry, 
+    getRecipes, 
+    getRecipeById, 
+    checkUser, 
+    updateUserDB, 
+    updateFavorite,
+    getFavorites 
+}
 
 async function establishConnection() {
     const uri = process.env.DATABASE_URL;
@@ -119,6 +127,74 @@ async function updateUserDB(user) {
             return false
         }
         return true;
+    } catch (error) {
+        console.error(error);
+    } finally {
+        await client.close();
+    }
+}
+
+async function updateFavorite(userToken, eventId) {
+    let client;
+
+    try {
+        client = await establishConnection();
+        
+        const result = await client.db("cookbook").collection("users").findOne({userToken: userToken});
+        let favorites = result.favorites
+
+        const duplicate = favorites.includes(eventId);
+        if (!duplicate) {
+            // Addes the event id to the users list of favorites
+            favorites.push(eventId);
+            const updateResult = await client.db("cookbook").collection("users").updateOne(
+                {userToken: userToken}, 
+                {$set: {favorites: favorites}});
+            if (updateResult) {
+                // favorites updated
+                return true;
+            }
+            // favorites not updated
+            return false;
+        } else {
+            // Removes the event id to the users list of favorites
+            favorites.splice(favorites.indexOf(eventId), 1);
+            const updateResult = await client.db("cookbook").collection("users").updateOne(
+                {userToken: userToken}, 
+                {$set: {favorites: favorites}});
+            if (updateResult) {
+                // favorites updated
+                return true;
+            }
+        }
+        // event id is duplicate
+        return false;
+    } catch (error) {
+        console.error(error);
+    } finally {
+        await client.close();
+    }
+}
+
+async function getFavorites(userToken) {
+    let client;
+
+    try {
+        client = await establishConnection();
+
+        let user = await client.db("cookbook").collection("users").findOne({userToken: userToken});
+
+        for (let i = 0; i < user.favorites.length; i++) {
+            user.favorites[i] = new ObjectId(user.favorites[i]);
+        }
+
+        if (user) {
+            let favorites = await client.db("cookbook").collection("recipes").find({_id: {$in: user.favorites}}).toArray();
+            if (favorites.length >= 1) {
+                return favorites;
+            }
+        }
+        return false;
     } catch (error) {
         console.error(error);
     } finally {
