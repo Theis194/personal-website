@@ -94,15 +94,6 @@ async function updateUser(user) {
     } else {
         user.privileges.splice(user.privileges.indexOf("author"), 1);
     }
-
-    /* let privs = extractprivileges(data["privileges"]);
-    for (let i = 0; i < privs.length; i++) {
-        if (!user.privileges.includes(privs[i])) {
-            user.privileges.push(privs[i]);
-        } else {
-            user.privileges.splice(user.privileges.indexOf(privs[i]), 1);
-        }
-    } */
     
     let result = await updateUserDB(user);
     return result;

@@ -7,7 +7,13 @@ dotenv.config();
 
 import { createNewRecipe } from "../Recipe/recipe.js"
 import { createUser, loginUser, updateUser } from "../usersystem/userHandler.js";
-import { getRecipes, getRecipeById, checkUser } from "../database/databaseHandler.js";
+import { 
+    getRecipes, 
+    getRecipeById, 
+    checkUser, 
+    updateFavorite,
+    getFavorites
+} from "../database/databaseHandler.js";
 import { extractData } from "./inputValidation.js";
 
 const hostname = process.env.HOSTNAME;
@@ -43,7 +49,7 @@ const server = https.createServer(options, async (req, res) =>{
                     break;
                 case "/getUser":
                     data = extractData(req.url.split("?")[1])
-                    data["email"] = data["email"].replace("%40", "@");
+                    data["email"] = decodeURIComponent(data["email"]);
                     data["email"]  = data["email"] .toLowerCase();
                     let user = await checkUser(data.email);
 
@@ -51,6 +57,7 @@ const server = https.createServer(options, async (req, res) =>{
                         fName: user.fName,
                         lName: user.lName,
                         email: user.email,
+                        favorites: user.favorites,
                         privileges: user.privileges
                     }
 
@@ -78,6 +85,18 @@ const server = https.createServer(options, async (req, res) =>{
                     result = await getRecipeById(data.id);
 
                     if (result) {
+                        res.writeHead(200, { "Content-Type": "application/json" });
+                        res.end(JSON.stringify(result));
+                    } else {
+                        res.writeHead(400, { "Content-Type": "text/plain" });
+                        res.end(JSON.stringify("noRecipesFound"));
+                    }
+                    break;
+                case "/getFavorites":
+                    data = extractData(req.url.split("?")[1]);
+                    result = await getFavorites(data.userToken);
+
+                    if (result.length >= 1) {
                         res.writeHead(200, { "Content-Type": "application/json" });
                         res.end(JSON.stringify(result));
                     } else {
@@ -159,23 +178,36 @@ const server = https.createServer(options, async (req, res) =>{
             
             break;
         case "PUT": // Update/Replace
-            case "updateUser":
-                formData = "";
-                req.on("data", chunk => {
-                    formData += chunk.toString();
-                });
-                req.on("end", async () => {
-                    let result = await updateUser(formData);
+            switch (_url) {
+                case "/updateUser":
+                    formData = "";
+                    req.on("data", chunk => {
+                        formData += chunk.toString();
+                    });
+                    req.on("end", async () => {
+                        let result = await updateUser(formData);
+                        
+                        if (result = true) { // Success
+                            res.writeHead(200, { "Content-Type": "application/json" });
+                            res.end(JSON.stringify("Succesfully updated user"));
+                        } else { // Error
+                            res.writeHead(400, { "Content-Type": "text/plain" });
+                            res.end(JSON.stringify(result));
+                        }
+                    });
+                    break;
+                case "/updateFavorites":
+                    let body = "";
 
-                    if (result = true) { // Success
-                        res.writeHead(200, { "Content-Type": "application/json" });
-                        res.end(JSON.stringify("Succesfully updated user"));
-                    } else { // Error
-                        res.writeHead(400, { "Content-Type": "text/plain" });
-                        res.end(JSON.stringify(result));
-                    }
-                });
-                break;
+                    req.on("data", (chunk) => {
+                        body += chunk.toString();
+                        body = JSON.parse(body);
+                    });
+                    req.on("end", async () => {
+                        await updateFavorite(body.userToken, body.recipeId)
+                    });
+                    break;
+            }
         default: // Unknown method type
             res.statusCode = 405;
             res.setHeader("Allow", "GET, POST, PATCH, DELETE, PUT");
