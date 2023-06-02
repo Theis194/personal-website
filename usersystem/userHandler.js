@@ -56,9 +56,8 @@ async function loginUser(query) {
         return "invalidEmail"
     }
     
-    console.log(data.mail);
     const user = await checkUser(data.mail)
-    console.log(user.password);
+    console.log(user);
 
     let compare = await comparePassword(data["password"], user.password).then(result => {
         if (result) {
