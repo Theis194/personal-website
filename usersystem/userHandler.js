@@ -56,7 +56,7 @@ async function loginUser(query) {
         return "invalidEmail"
     }
     
-    console.log(data);
+    console.log(data.mail);
     const user = await checkUser(data.mail)
     console.log(user.password);
 
