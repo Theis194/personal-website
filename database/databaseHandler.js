@@ -94,7 +94,7 @@ async function getRecipeById(id) {
 
 async function checkUser(email) {
     let client;
-
+    console.log(email);
     try {
         client = await establishConnection();
         const result = await client.db("cookbook").collection("users").findOne({email: email});

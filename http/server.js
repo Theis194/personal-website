@@ -37,7 +37,6 @@ const server = https.createServer(options, async (req, res) =>{
         let data;
             switch (_url) {
                 case "/loginUser":
-                    console.log(req.url.split("?")[1]);
                     result = await loginUser(req.url.split("?")[1]);
 
                     if (result !== "invalidEmail" && result !== "wrongPassword") { // Success
