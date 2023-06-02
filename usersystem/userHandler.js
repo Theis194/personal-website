@@ -125,6 +125,7 @@ function createCookie(user) {
 
 async function comparePassword(plainPassword, hashedPassword) {
     return new Promise((resolve, reject) => {
+        console.log(plainPassword, hashedPassword);
         bcrypt.compare(plainPassword, hashedPassword, (err, result) => {
             if (err) {
                 reject(err);
