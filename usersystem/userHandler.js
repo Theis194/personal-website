@@ -57,7 +57,7 @@ async function loginUser(query) {
     }
     
     console.log(data);
-    const user = await checkUser(data["mail"])
+    const user = await checkUser(data.mail)
     console.log(user.password);
 
     let compare = await comparePassword(data["password"], user.password).then(result => {
