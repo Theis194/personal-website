@@ -57,7 +57,6 @@ async function loginUser(query) {
     }
     
     const user = await checkUser(data.mail.toLowerCase());
-    console.log(user);
 
     let compare = await comparePassword(data["password"], user.password).then(result => {
         if (result) {
@@ -126,7 +125,6 @@ function createCookie(user) {
 
 async function comparePassword(plainPassword, hashedPassword) {
     return new Promise((resolve, reject) => {
-        console.log(plainPassword, hashedPassword);
         bcrypt.compare(plainPassword, hashedPassword, (err, result) => {
             if (err) {
                 reject(err);
