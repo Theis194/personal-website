@@ -1,19 +1,22 @@
 let currUser;
-fetch(`/getUser?email=${JSON.parse(JSON.parse(getCookie("currentUser"))).email}`)
-    .then(response => response.json())
-    .then(data => {
-        currUser = data;
-        console.log(currUser);
-    });
+async function startUp() {
+    await fetch(`/getUser?email=${JSON.parse(JSON.parse(getCookie("currentUser"))).email}`)
+        .then(response => response.json())
+        .then(data => {
+            currUser = data;
+            console.log(currUser);
+        });
 
-fetch("/getRecipes", {method: "GET"})
-    .then(response => response.json())
-    .then(data => {
-        //Do something with data
-        createRecipeListItems(data);
-    })
-    .catch(error => console.error(error));
+        fetch("/getRecipes", {method: "GET"})
+            .then(response => response.json())
+            .then(data => {
+                //Do something with data
+                createRecipeListItems(data);
+            })
+            .catch(error => console.error(error));
+}
 
+startUp();
 
 function createRecipeListItems(recipes) {
     let recipeList = document.querySelector("#recipe-list");
