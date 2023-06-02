@@ -1,21 +1,25 @@
 let list = document.querySelector("#list")
 let currUser = JSON.parse(JSON.parse(getCookie("currentUser")));
 
-let currentUser;
-fetch(`/getUser?email=${currUser.email}`)
-    .then(response => response.json())
-    .then(data => {
-        currentUser = data;
-        console.log(currUser);
-    });
+async function startUp() {
+    let currentUser;
+    await fetch(`/getUser?email=${currUser.email}`)
+        .then(response => response.json())
+        .then(data => {
+            currentUser = data;
+            console.log(currUser);
+        });
+    
+    // Fetch request to gather users favorit events
+    fetch(`/getFavorites?userToken=${currUser.userToken}`, {method: "GET"})
+        .then(Response => Response.json())
+        .then(data => {
+            console.log(data);
+            insertFavorites(data);
+    }).catch(error => console.error(error));
+}
 
-// Fetch request to gather users favorit events
-fetch(`/getFavorites?userToken=${currUser.userToken}`, {method: "GET"})
-    .then(Response => Response.json())
-    .then(data => {
-        console.log(data);
-        insertFavorites(data);
-}).catch(error => console.error(error));
+startUp();
 
 function insertFavorites(favorites) {
     let template = document.querySelector("#card");
