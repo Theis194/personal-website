@@ -1,11 +1,14 @@
 let currUser;
+let currentUser = JSON.parse(JSON.parse(getCookie("currentUser")))
 async function startUp() {
-    await fetch(`/getUser?email=${JSON.parse(JSON.parse(getCookie("currentUser"))).email}`)
-        .then(response => response.json())
-        .then(data => {
-            currUser = data;
-            console.log(currUser);
-        });
+    if(currentUser != null) {
+        await fetch(`/getUser?email=${currentUser.email}`)
+            .then(response => response.json())
+            .then(data => {
+                currUser = data;
+                console.log(currUser);
+            });
+    }
 
         fetch("/getRecipes", {method: "GET"})
             .then(response => response.json())
@@ -28,9 +31,11 @@ function createRecipeListItems(recipes) {
         newRLI.addEventListener("click", changePage);
         newRLI.querySelector(".insidebox.row.rounded").dataset.recipeid = recipes[i]._id;
         
-        if (currUser.favorites.includes(recipes[i]._id)) {
-            let button = newRLI.querySelector(".button");
-            button.classList.add("liked")
+        if (currentUser != null) {
+            if (currUser.favorites.includes(recipes[i]._id)) {
+                let button = newRLI.querySelector(".button");
+                button.classList.add("liked")
+            }
         }
         newRLI.querySelector(".button").addEventListener("click", favoriteRecipe);
         
