@@ -6,7 +6,6 @@ async function startUp() {
             .then(response => response.json())
             .then(data => {
                 currUser = data;
-                console.log(currUser);
             });
     }
 
@@ -57,21 +56,23 @@ function changePage(e) { // this changes page to the recipePage with query
 }
 
 function favoriteRecipe(e) {
-    $(this).toggleClass("liked");
-    let targetElem = e.target;
-    while (!targetElem.hasAttribute("data-recipeid")) {
-        targetElem = targetElem.parentElement;
+    if (currentUser != null) {
+        $(this).toggleClass("liked");
+        let targetElem = e.target;
+        while (!targetElem.hasAttribute("data-recipeid")) {
+            targetElem = targetElem.parentElement;
+        }
+        let body = {
+            recipeId: targetElem.dataset.recipeid,
+            userToken: JSON.parse(JSON.parse(getCookie("currentUser"))).userToken
+        }
+        // fetch PUT request to update users favorites list
+        fetch("/updateFavorites", {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })
     }
-    let body = {
-        recipeId: targetElem.dataset.recipeid,
-        userToken: JSON.parse(JSON.parse(getCookie("currentUser"))).userToken
-    }
-    // fetch PUT request to update users favorites list
-    fetch("/updateFavorites", {
-        method: "put",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-    })
 }

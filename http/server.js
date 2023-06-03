@@ -208,6 +208,7 @@ const server = https.createServer(options, async (req, res) =>{
                     });
                     break;
             }
+            break;
         default: // Unknown method type
             res.statusCode = 405;
             res.setHeader("Allow", "GET, POST, PATCH, DELETE, PUT");
